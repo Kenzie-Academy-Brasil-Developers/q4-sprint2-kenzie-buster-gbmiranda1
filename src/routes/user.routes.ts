@@ -11,13 +11,7 @@ import isAdmMiddleware from "../middlewares/isAdm.middleware";
 const routes = Router();
 
 export const userRoutes = () => {
-  routes.post(
-    "/register",
-    emailExistsMiddleware,
-    authUser,
-    isAdmMiddleware,
-    createUserController
-  );
+  routes.post("/register", emailExistsMiddleware, createUserController);
   routes.post("/login", loginController);
 
   return routes;
