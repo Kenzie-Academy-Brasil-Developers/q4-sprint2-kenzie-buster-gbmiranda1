@@ -1,5 +1,8 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export class initialMigration1655097715571 implements MigrationInterface {
   name = "initialMigration1655097715571";
@@ -29,10 +32,12 @@ export class initialMigration1655097715571 implements MigrationInterface {
     await queryRunner.query(
       `
                 INSERT INTO "user" ("id", "name", "email", "password", "isAdm")
-                VALUES ('3e018b08-6388-40b4-b4b2-aa192c0b5ba4', 'admin', 'kenzie@mail.com', '${bcrypt.hashSync(
-                  "umaSenhaForte!",
-                  10
-                )}', true)
+                VALUES ('3e018b08-6388-40b4-b4b2-aa192c0b5ba4', '${
+                  process.env.ADMIN_NAME
+                }', '${process.env.ADMIN_EMAIL}', '${bcrypt.hashSync(
+        `${process.env.ADMIN_PASSWORD}`,
+        10
+      )}', true)
             `
     );
   }
