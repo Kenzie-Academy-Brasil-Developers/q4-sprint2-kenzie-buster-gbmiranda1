@@ -36,7 +36,7 @@ export const createUserService = async (
   }
 
   const hashPassword = await bcrypt.hash(body.password, 10);
-
+  console.log(hashPassword);
   const user = new User();
   user.name = body.name;
   user.email = body.email.toLowerCase();

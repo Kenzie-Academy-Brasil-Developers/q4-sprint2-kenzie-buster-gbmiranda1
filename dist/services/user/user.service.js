@@ -50,6 +50,7 @@ const createUserService = (body, currentUser) => __awaiter(void 0, void 0, void 
         return { status: 401, message: { error: result } };
     }
     const hashPassword = yield bcrypt_1.default.hash(body.password, 10);
+    console.log(hashPassword);
     const user = new user_entity_1.User();
     user.name = body.name;
     user.email = body.email.toLowerCase();

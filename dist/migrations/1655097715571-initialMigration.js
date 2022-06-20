@@ -8,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initialMigration1655097715571 = void 0;
+const bcrypt_1 = __importDefault(require("bcrypt"));
 class initialMigration1655097715571 {
     constructor() {
-        this.name = 'initialMigration1655097715571';
+        this.name = "initialMigration1655097715571";
     }
     up(queryRunner) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -23,6 +27,10 @@ class initialMigration1655097715571 {
             yield queryRunner.query(`ALTER TABLE "cart" ADD CONSTRAINT "FK_756f53ab9466eb52a52619ee019" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
             yield queryRunner.query(`ALTER TABLE "cart" ADD CONSTRAINT "FK_9ed71a7c7e8e5e85c857bf79682" FOREIGN KEY ("dvdId") REFERENCES "dvd"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
             yield queryRunner.query(`ALTER TABLE "dvd" ADD CONSTRAINT "FK_a68c996998e86e22dc2580918c3" FOREIGN KEY ("stockId") REFERENCES "stock"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
+            yield queryRunner.query(`
+                INSERT INTO "user" ("name", "email", "password", "isAdm")
+                VALUES ('${process.env.ADMIN_NAME}', '${process.env.ADMIN_EMAIL}', '${bcrypt_1.default.hashSync(String(process.env.ADMIN_PASSWORD), 10)}', true)
+            `);
         });
     }
     down(queryRunner) {
