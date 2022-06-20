@@ -29,12 +29,10 @@ export class initialMigration1655097715571 implements MigrationInterface {
     await queryRunner.query(
       `
                 INSERT INTO "user" ("id", "name", "email", "password", "isAdm")
-                VALUES ('3e018b08-6388-40b4-b4b2-aa192c0b5ba4', '${
-                  process.env.ADMIN_NAME
-                }', '${process.env.ADMIN_EMAIL}', '${bcrypt.hashSync(
-        String(process.env.ADMIN_PASSWORD),
-        10
-      )}', true)
+                VALUES ('3e018b08-6388-40b4-b4b2-aa192c0b5ba4', 'admin', 'kenzie@mail.com', '${bcrypt.hashSync(
+                  String(process.env.ADMIN_PASSWORD),
+                  10
+                )}', true)
             `
     );
   }
